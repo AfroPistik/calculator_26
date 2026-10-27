@@ -48,7 +48,7 @@ public class CalculatorView extends JFrame {
             btn.setOpaque(true);
 
             if (text.equals("÷") || text.equals("×") || text.equals("-") || text.equals("+") || text.equals("=")) {
-                btn.setBackground(new Color(255, 149, 0)); // Πορτοκαλί
+                btn.setBackground(new Color(255, 149, 0)); // Πορτοκαλι
                 btn.setForeground(Color.WHITE);
             } else if (text.equals("⌫") || text.equals("AC") || text.equals("%")) {
                 btn.setBackground(new Color(165, 165, 165)); // Ανοιχτό γκρι
