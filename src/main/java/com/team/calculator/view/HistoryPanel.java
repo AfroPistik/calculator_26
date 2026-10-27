@@ -1,4 +1,7 @@
 package com.team.calculator.view;
 
-public class HistoryPanel {
+import javax.swing.JPanel;
+
+public class HistoryPanel extends JPanel {
+    // TODO: λίστα ιστορικού
 }

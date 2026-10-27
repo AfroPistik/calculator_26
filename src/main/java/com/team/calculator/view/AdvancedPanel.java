@@ -1,4 +1,7 @@
 package com.team.calculator.view;
 
-public class AdvancedPanel {
+import javax.swing.JPanel;
+
+public class AdvancedPanel extends JPanel {
+    // TODO: κουμπιά ^, √, %, sin, cos, tan
 }
