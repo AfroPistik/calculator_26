@@ -1,4 +1,5 @@
 package com.team.calculator.model;
 
-public class ExpressionEvaluator {
+public interface ExpressionEvaluator {
+    double evaluate(String expression) throws CalculatorException;
 }
