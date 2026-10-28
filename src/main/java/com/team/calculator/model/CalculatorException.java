@@ -1,8 +1,7 @@
 package com.team.calculator.model;
 
-public class CalculatorException extends Exception {
-
-    public CalculatorException(String message) {
-        super(message);
+public class CalculatorException extends RuntimeException {
+    public CalculatorException(String s) {
+        super(s);
     }
 }
