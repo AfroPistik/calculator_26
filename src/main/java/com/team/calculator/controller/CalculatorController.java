@@ -4,6 +4,8 @@ import com.team.calculator.model.CalculatorException;
 import com.team.calculator.model.CalculatorModel;
 import com.team.calculator.view.CalculatorView;
 
+import java.math.BigDecimal;
+
 public class CalculatorController {
     private final CalculatorView view;
     private final CalculatorModel model;
@@ -34,6 +36,8 @@ public class CalculatorController {
                 case "C" -> clear();
                 case "⌫" -> backspace();
                 case "=" -> evaluate();
+                case "±" -> negate();
+                case "%" -> percent();
                 case "M+" -> memoryAdd();
                 case "M-" -> memorySubtract();
                 case "MR" -> memoryRecall();
@@ -96,6 +100,24 @@ public class CalculatorController {
         view.showHistory(model.getHistory());
     }
 
+    /** ±: αλλάζει το πρόσημο, αν η τρέχουσα έκφραση είναι απλός αριθμός. */
+    private void negate() throws CalculatorException {
+        if (expression.length() == 0) {
+            return;
+        }
+        double value = currentValue();
+        replaceExpression(format(-value));
+    }
+
+    /** %: διαιρεί με το 100, αν η τρέχουσα έκφραση είναι απλός αριθμός. */
+    private void percent() throws CalculatorException {
+        if (expression.length() == 0) {
+            return;
+        }
+        double value = currentValue();
+        replaceExpression(format(value / 100.0));
+    }
+
     private void memoryAdd() throws CalculatorException {
         model.memoryAdd(currentValue());
         showingResult = true;
@@ -136,6 +158,13 @@ public class CalculatorController {
         }
     }
 
+    private void replaceExpression(String text) {
+        expression.setLength(0);
+        expression.append(text);
+        showingResult = true;
+        updateDisplay();
+    }
+
     private void showFailure(String message) {
         expression.setLength(0);
         showingResult = false;
@@ -150,6 +179,8 @@ public class CalculatorController {
     private String normalize(String token) {
         return switch (token) {
             case "AC" -> "C";
+            case "Del" -> "⌫";
+            case "," -> ".";
             case "÷" -> "/";
             case "×", "x" -> "*";
             case "−" -> "-";
@@ -166,10 +197,11 @@ public class CalculatorController {
         return c == '+' || c == '-' || c == '*' || c == '/' || c == '^' || c == '(';
     }
 
+    /** Ακέραιοι χωρίς ".0", δεκαδικοί χωρίς επιστημονική μορφή (π.χ. 5.0E-4). */
     private String format(double value) {
         if (value == Math.rint(value) && Math.abs(value) < 1e15) {
             return String.valueOf((long) value);
         }
-        return String.valueOf(value);
+        return new BigDecimal(String.valueOf(value)).toPlainString();
     }
 }
