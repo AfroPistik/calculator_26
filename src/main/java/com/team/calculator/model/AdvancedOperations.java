@@ -11,7 +11,7 @@ public class AdvancedOperations {
         // Μέθοδος για τετραγωνική ρίζα
         public double squareRoot(double number) {
             if (number < 0) {
-                throw new IllegalArgumentException("Cannot calculate square root of a negative number");
+                throw new CalculatorException("Cannot calculate square root of a negative number");
             }
             return Math.sqrt(number);
         }
