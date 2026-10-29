@@ -2,13 +2,16 @@ package com.team.calculator.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
+import java.util.function.Consumer;
 
-public class CalculatorView extends JFrame {
+public class SwingCalculatorView extends JFrame implements CalculatorView {
 
     private JLabel display;
     private JPanel buttonPanel;
+    private Consumer<String> buttonListener;
 
-    public CalculatorView() {
+    public SwingCalculatorView() {
         setTitle("iOS Calculator");
         setSize(360, 580);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,10 +61,34 @@ public class CalculatorView extends JFrame {
                 btn.setForeground(Color.WHITE);
             }
 
+            btn.addActionListener(e -> {
+                if (buttonListener != null) buttonListener.accept(text);
+            });
+
             buttonPanel.add(btn);
         }
 
         mainPanel.add(buttonPanel, BorderLayout.CENTER);
         add(mainPanel);
+    }
+
+    @Override
+    public void setDisplay(String text) {
+        display.setText(text);
+    }
+
+    @Override
+    public void showError(String message) {
+        display.setText(message);
+    }
+
+    @Override
+    public void showHistory(List<String> entries) {
+        // προς το παρόν κενό
+    }
+
+    @Override
+    public void setButtonListener(Consumer<String> listener) {
+        this.buttonListener = listener;
     }
 }
